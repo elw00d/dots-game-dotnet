@@ -190,6 +190,11 @@ namespace DotsGame {
                                     acceptedClientThreadStopped = true;
                                 }
                             }
+                            catch (InvalidOperationException)
+                            {
+                                // TODO : Пофиксить. Если ливать из игры, иногда падает тут (исключение аналогично
+                                // TODO : исключению, возникающему на клиенте в GameClient)
+                            }
                         }, null);
                     }
                     // Записываем все данные из очереди в поток tcp client'а
