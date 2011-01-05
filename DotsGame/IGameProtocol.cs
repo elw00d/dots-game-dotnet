@@ -10,6 +10,7 @@ namespace DotsGame {
         event EventHandler OnDisconnected;
         event EventHandler OnConnected;
         event EventHandler OnGameStarted;
+        event EventHandler OnLeave;
         ICommunicator GetCommunicator();
     }
 

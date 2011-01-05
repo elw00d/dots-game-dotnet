@@ -214,7 +214,7 @@ namespace DotsGame {
                     }
                     //
                     lock (locker) {
-                        if (connectedClientThreadStopped) {
+                        if (connectedClientThreadStopped && queue.Count == 0) {
                             break;
                         }
                     }
@@ -297,6 +297,8 @@ namespace DotsGame {
         public event EventHandler OnConnect;
 
         public void LeaveGame() {
+            sendData(Encoding.UTF8.GetBytes("leave:"));
+            //
             DisconnectFromGame();
             //
             firstPlayerName = null;

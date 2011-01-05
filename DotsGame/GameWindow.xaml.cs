@@ -17,7 +17,11 @@ namespace DotsGame {
     /// Interaction logic for GameWindow.xaml
     /// </summary>
     public partial class GameWindow : Window {
+
+        private IGameProtocol protocol;
+
         public GameWindow(IGameProtocol gameProtocol) {
+            protocol = gameProtocol;
             InitializeComponent();
             //
             bool isOwner = gameProtocol.GetCommunicator().IsOwner;
@@ -38,6 +42,28 @@ namespace DotsGame {
 
             this.Title = isOwner ? "Красные начинают.. и выигрывают" : "Я подключен к игре.";
             this.labelMove.Content = mapControl1.isCurrentPlayerMove ? "Сейчас Ваш ход" : "Ход противника..";
+            //
+            protocol.OnLeave += onProtocolOnOnLeave;
+        }
+
+        private void onProtocolOnOnLeave(object o, EventArgs eventArgs) {
+            Application.Current.Dispatcher.BeginInvoke(new Func<int>(() => {
+                MessageBox.Show("Ваш противник покинул игру.", "Сообщение", MessageBoxButton.OK,
+                                MessageBoxImage.Information);
+                this.Close();
+                return 0;
+            }));
+        }
+
+        private void buttonLeaveGame_Click(object sender, RoutedEventArgs e)
+        {
+            this.protocol.GetCommunicator().LeaveGame();
+            this.Close();
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            protocol.OnLeave -= onProtocolOnOnLeave;
         }
     }
 }

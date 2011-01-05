@@ -20,6 +20,13 @@ namespace DotsGame
             communicator.OnConnect += CommunicatorOnOnConnect;
         }
 
+        private void fireOnLeave() {
+            EventHandler handler = OnLeave;
+            if (null != handler) {
+                handler.Invoke(this, EventArgs.Empty);
+            }
+        }
+
         private void CommunicatorOnOnConnect(object sender, EventArgs eventArgs) {
             EventHandler handler = OnConnected;
             if (null != handler) {
@@ -60,6 +67,8 @@ namespace DotsGame
                 if (null != handler) {
                     handler.Invoke(this, EventArgs.Empty);
                 }
+            } else if (s.StartsWith("leave:")) {
+                fireOnLeave();
             }
         }
 
@@ -81,6 +90,7 @@ namespace DotsGame
         public event EventHandler OnDisconnected;
         public event EventHandler OnConnected;
         public event EventHandler OnGameStarted;
+        public event EventHandler OnLeave;
 
         public ICommunicator GetCommunicator() {
             return communicator;

@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="GameWindow" xmlns:my="clr-namespace:DotsGame" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        MaxHeight="435" MaxWidth="670">
+        MaxHeight="435" MaxWidth="670" Closed="Window_Closed">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="408"/>
@@ -30,7 +30,7 @@
             <Label Grid.Row="2" Grid.Column="0" Content="Очки противника" HorizontalAlignment="Left" Name="label3" VerticalAlignment="Top" />
             <Label Grid.Row="2" Grid.Column="1" Content="0" HorizontalAlignment="Left" Name="labelEnemyPoints" VerticalAlignment="Top" />
             
-            <Button Content="Выйти из игры" Grid.Row="3" Grid.ColumnSpan="2" Height="30" Margin="5" VerticalAlignment="Bottom" Name="buttonLeaveGame"/>
+            <Button Content="Выйти из игры" Grid.Row="3" Grid.ColumnSpan="2" Height="30" Margin="5" VerticalAlignment="Bottom" Name="buttonLeaveGame" Click="buttonLeaveGame_Click" />
         </Grid>
     </Grid>
 </Window>
