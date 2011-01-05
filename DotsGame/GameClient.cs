@@ -175,12 +175,14 @@ namespace DotsGame {
                         receivingStarted = true;
                         Byte[] bytes = new byte[256];
                         client.GetStream().BeginRead(bytes, 0, bytes.Length, ar => {
-                            try {
+                            try
+                            {
                                 int readed = client.GetStream().EndRead(ar);
                                 // Raise event about new data readed
                                 DataReceiveEventArgs args = new DataReceiveEventArgs(bytes, readed);
                                 DataReceiveEventHandler handler = OnDataReceive;
-                                if (null != handler) {
+                                if (null != handler)
+                                {
                                     handler.Invoke(this, args);
                                 }
                                 //
@@ -188,11 +190,19 @@ namespace DotsGame {
                                 Logger.Log("GAME CLIENT : Readed " + readed + " bytes : " +
                                            Encoding.UTF8.GetString(bytes));
                                 receivingStarted = false;
-                            } catch (ObjectDisposedException) {
-                            } catch (IOException) {
-                                lock (locker) {
+                            }
+                            catch (ObjectDisposedException)
+                            {
+                            }
+                            catch (IOException)
+                            {
+                                lock (locker)
+                                {
                                     connectedClientThreadStopped = true;
                                 }
+                            }
+                            catch (InvalidOperationException) {
+                                // TODO : Пофиксить. Если много раз заходить/перезаходить в игру, то здесь падает
                             }
                         }, null);
                     }
