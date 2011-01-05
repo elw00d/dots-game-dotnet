@@ -177,6 +177,9 @@ namespace DotsGame {
                                     }
                                 }
                                 //
+                                if (s.StartsWith("leave:")) {
+                                    acceptedClientThreadStopped = true;
+                                }
                                 Debug.Print("Readed {0} bytes : {1}", readed, Encoding.UTF8.GetString(bytes));
                                 Logger.Log("GAME SERVER : Readed " + readed + " bytes : " +
                                            Encoding.UTF8.GetString(bytes));
@@ -208,7 +211,7 @@ namespace DotsGame {
                     //
                     acceptedClientThreadWaitHandle.WaitOne(200);
                     lock (locker) {
-                        if (acceptedClientThreadStopped) {
+                        if (acceptedClientThreadStopped && queue.Count == 0) {
                             break;
                         }
                     }
@@ -276,6 +279,8 @@ namespace DotsGame {
         public event EventHandler OnConnect;
 
         public void LeaveGame() {
+            sendData(Encoding.UTF8.GetBytes("leave:"));
+            //
             CancelGame();
         }
 
